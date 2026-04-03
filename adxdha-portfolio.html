@@ -1,0 +1,898 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adxdha — Creative Developer & AI Agent Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fd: #1a2e1a; --fm: #2d4a2d; --fl: #4a7c4a;
+  --moss: #6b8f4e; --sage: #8fad6a; --fern: #a8c68f;
+  --mist: #d4e6c3; --white: #f9faf7; --bark: #5c3d2e;
+  --gold: #c9a84c; --shadow: rgba(26,46,26,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--fd);overflow-x:hidden;cursor:none;}
+
+/* Cursor */
+.cur{width:11px;height:11px;background:var(--fl);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform .15s,background .3s;transform:translate(-50%,-50%);}
+.cur-t{width:34px;height:34px;border:1.5px solid var(--fl);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:all .35s cubic-bezier(.25,.46,.45,.94);transform:translate(-50%,-50%);opacity:.6;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 60px;background:rgba(249,250,247,.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(107,143,78,.12);transition:padding .3s;}
+.logo{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;color:var(--fd);text-decoration:none;letter-spacing:-.02em;}
+.logo span{color:var(--moss);font-style:italic;}
+.nl{display:flex;gap:38px;list-style:none;}
+.nl a{text-decoration:none;color:var(--fm);font-size:.86rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:color .3s;position:relative;}
+.nl a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:var(--moss);transition:width .3s;}
+.nl a:hover::after{width:100%;}
+.nl a:hover{color:var(--moss);}
+.nav-cta{background:var(--fd)!important;color:var(--white)!important;padding:10px 24px;border-radius:50px;transition:background .3s,transform .2s!important;}
+.nav-cta:hover{background:var(--fl)!important;transform:scale(1.04)!important;}
+.nav-cta::after{display:none!important;}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(180deg,#c8dfc8 0%,#d8ecd4 20%,#e8f2e0 45%,#f2f7ec 65%,#f9faf7 100%);}
+
+/* Sun */
+.sun{position:absolute;top:-5%;left:58%;width:550px;height:550px;background:conic-gradient(from 0deg,transparent 0deg,rgba(232,213,163,.13) 5deg,transparent 10deg,transparent 18deg,rgba(232,213,163,.1) 23deg,transparent 28deg,transparent 36deg,rgba(232,213,163,.09) 40deg,transparent 45deg);animation:rotSun 40s linear infinite;pointer-events:none;}
+@keyframes rotSun{to{transform:rotate(360deg);}}
+
+/* Mist */
+.mist{position:absolute;width:200%;height:160px;border-radius:50%;pointer-events:none;}
+.m1{background:radial-gradient(ellipse,rgba(255,255,255,.55) 0%,transparent 70%);bottom:36%;left:-50%;animation:mistDr 30s linear infinite;}
+.m2{background:radial-gradient(ellipse,rgba(212,230,195,.45) 0%,transparent 70%);bottom:44%;left:-20%;animation:mistDr 45s linear infinite;animation-delay:-15s;}
+.m3{background:radial-gradient(ellipse,rgba(255,255,255,.4) 0%,transparent 70%);bottom:29%;left:-70%;animation:mistDr 38s linear infinite;animation-delay:-8s;}
+@keyframes mistDr{0%{transform:translateX(0);}100%{transform:translateX(50%);}}
+
+/* Ground */
+.gnd{position:absolute;bottom:0;width:100%;}
+.gf{height:160px;background:linear-gradient(180deg,transparent,rgba(74,124,74,.2) 40%,rgba(45,74,45,.35) 100%);border-radius:60% 60% 0 0/30% 30% 0 0;bottom:24%;}
+.gm{height:200px;background:linear-gradient(180deg,transparent,rgba(107,143,78,.3) 30%,rgba(74,124,74,.55) 100%);border-radius:50% 50% 0 0/25% 25% 0 0;bottom:12%;}
+.gn{height:240px;background:linear-gradient(180deg,rgba(106,143,78,0),rgba(106,143,78,.5) 20%,rgba(74,124,74,.8) 50%,rgba(45,74,45,1) 100%);bottom:0;}
+
+/* Light rays */
+.lray{position:absolute;bottom:0;width:100%;height:80%;pointer-events:none;}
+
+/* Leaves */
+.leaf{position:absolute;border-radius:50% 0 50% 0;animation:lfFall linear infinite;opacity:0;pointer-events:none;}
+@keyframes lfFall{0%{transform:translateY(-30px) rotate(0deg);opacity:0;}10%{opacity:.9;}90%{opacity:.5;}100%{transform:translateY(100vh) rotate(720deg) translateX(70px);opacity:0;}}
+
+/* Spores */
+.spore{position:absolute;border-radius:50%;animation:spFl linear infinite;opacity:0;pointer-events:none;}
+@keyframes spFl{0%{transform:translateY(0) scale(1);opacity:0;}10%{opacity:.8;}90%{opacity:.5;}100%{transform:translateY(-90vh) translateX(40px) scale(.3);opacity:0;}}
+
+/* Hero content */
+.hc{position:relative;z-index:10;text-align:center;max-width:780px;padding:0 20px;animation:hRev 1.2s cubic-bezier(.25,.46,.45,.94) .3s forwards;opacity:0;transform:translateY(40px);}
+@keyframes hRev{to{opacity:1;transform:translateY(0);}}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(107,143,78,.15);border:1px solid rgba(107,143,78,.3);color:var(--moss);font-size:.76rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:8px 20px;border-radius:50px;margin-bottom:26px;backdrop-filter:blur(10px);}
+.badge::before{content:'';width:6px;height:6px;background:var(--moss);border-radius:50%;animation:pls 2s infinite;}
+@keyframes pls{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+.ht{font-family:'Playfair Display',serif;font-size:clamp(3.2rem,7.5vw,6.5rem);font-weight:900;line-height:1.0;letter-spacing:-.03em;color:var(--fd);margin-bottom:8px;}
+.ht .acc{color:var(--moss);font-style:italic;display:block;}
+.hsub{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.3vw,1.6rem);font-style:italic;color:var(--fl);margin-bottom:26px;font-weight:300;}
+.hdesc{font-size:.98rem;color:#5a7a5a;line-height:1.78;max-width:500px;margin:0 auto 42px;font-weight:400;}
+.hbtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.bp{background:var(--fd);color:var(--white);padding:15px 38px;border-radius:50px;font-size:.88rem;font-weight:600;text-decoration:none;letter-spacing:.04em;transition:all .3s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden;box-shadow:0 8px 28px rgba(26,46,26,.24);}
+.bp::before{content:'';position:absolute;inset:0;background:var(--fl);transform:scaleX(0);transform-origin:left;transition:transform .4s;border-radius:50px;}
+.bp:hover::before{transform:scaleX(1);}
+.bp span{position:relative;z-index:1;}
+.bp:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(26,46,26,.28);}
+.bs{border:1.5px solid var(--fl);color:var(--fd);padding:15px 38px;border-radius:50px;font-size:.88rem;font-weight:500;text-decoration:none;transition:all .3s;backdrop-filter:blur(10px);background:rgba(255,255,255,.6);}
+.bs:hover{background:var(--fd);color:var(--white);transform:translateY(-3px);box-shadow:0 12px 28px rgba(26,46,26,.2);}
+
+/* Scroll indicator */
+.sci{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--moss);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;animation:scB 2.5s ease-in-out infinite;z-index:10;}
+.scl{width:1.5px;height:48px;background:linear-gradient(180deg,var(--moss),transparent);}
+@keyframes scB{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* SECTIONS */
+section{padding:100px 60px;}
+.stag{display:inline-flex;align-items:center;gap:10px;font-size:.73rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--moss);margin-bottom:18px;}
+.stag::before{content:'';width:22px;height:1.5px;background:var(--moss);}
+.sttl{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.8vw,3.2rem);font-weight:700;line-height:1.15;color:var(--fd);margin-bottom:14px;letter-spacing:-.02em;}
+.sttl em{color:var(--moss);font-style:italic;}
+.sdesc{font-size:.96rem;color:#6b8a6b;line-height:1.82;max-width:510px;}
+
+/* ABOUT */
+.about-wrap{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:center;}
+.acard{background:linear-gradient(135deg,#eef5e8,#f5faf0);border:1px solid rgba(107,143,78,.2);border-radius:24px;padding:46px 38px;position:relative;overflow:hidden;box-shadow:0 18px 55px rgba(26,46,26,.08);transform-style:preserve-3d;transition:transform .6s;}
+.acard:hover{transform:rotateY(-5deg) rotateX(3deg);}
+.acard::before{content:'';position:absolute;top:-55px;right:-55px;width:180px;height:180px;background:radial-gradient(circle,rgba(107,143,78,.15),transparent 70%);border-radius:50%;}
+.avt{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--fm),var(--fl));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:2.4rem;color:white;font-weight:700;margin-bottom:26px;box-shadow:0 8px 28px rgba(45,74,45,.28);}
+.anm{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--fd);margin-bottom:5px;}
+.arl{color:var(--moss);font-size:.86rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:22px;}
+.astats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px;padding-top:28px;border-top:1px solid rgba(107,143,78,.15);}
+.stat-n{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--fd);line-height:1;}
+.stat-l{font-size:.7rem;color:var(--moss);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-top:4px;}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:32px;}
+.chip{background:linear-gradient(135deg,rgba(107,143,78,.12),rgba(74,124,74,.07));border:1px solid rgba(107,143,78,.24);color:var(--fm);padding:7px 16px;border-radius:50px;font-size:.8rem;font-weight:500;transition:all .3s;cursor:default;}
+.chip:hover{background:var(--fd);color:white;border-color:var(--fd);transform:translateY(-2px);}
+
+/* AI SECTION */
+.ai-wrap{background:linear-gradient(135deg,var(--fd) 0%,#0d1a0d 100%);border-radius:30px;margin:0 40px;padding:76px;position:relative;overflow:hidden;}
+.ai-wrap::before{content:'';position:absolute;top:-90px;right:-90px;width:380px;height:380px;background:radial-gradient(circle,rgba(107,143,78,.2),transparent 70%);border-radius:50%;}
+.ai-wrap::after{content:'';position:absolute;bottom:-70px;left:-70px;width:280px;height:280px;background:radial-gradient(circle,rgba(200,223,200,.1),transparent 70%);border-radius:50%;}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;position:relative;z-index:2;}
+.ai-stag{color:var(--sage)!important;}
+.ai-stag::before{background:var(--sage)!important;}
+.ai-ttl{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.7rem);font-weight:700;color:white;line-height:1.2;margin-bottom:18px;}
+.ai-ttl em{color:var(--sage);font-style:italic;}
+.ai-desc{color:rgba(255,255,255,.68);line-height:1.82;font-size:.93rem;margin-bottom:32px;}
+.ai-feats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ai-feat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:15px;padding:22px 18px;transition:all .3s;cursor:pointer;}
+.ai-feat:hover{background:rgba(107,143,78,.2);border-color:rgba(107,143,78,.4);transform:translateY(-4px);}
+.ai-fi{font-size:1.7rem;margin-bottom:10px;}
+.ai-ftl{font-weight:600;font-size:.88rem;color:var(--mist);margin-bottom:5px;}
+.ai-fds{font-size:.76rem;color:rgba(255,255,255,.48);line-height:1.6;}
+/* Chat demo */
+.demo{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px;}
+.demo-hd{display:flex;align-items:center;gap:8px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08);}
+.ddot{width:8px;height:8px;border-radius:50%;}
+.ddot:nth-child(1){background:#ff5f57;}
+.ddot:nth-child(2){background:#ffbd2e;}
+.ddot:nth-child(3){background:#28ca41;}
+.demo-lbl{font-size:.76rem;color:rgba(255,255,255,.42);margin-left:auto;}
+#chatBox{max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+#chatBox::-webkit-scrollbar{width:3px;}
+#chatBox::-webkit-scrollbar-track{background:rgba(255,255,255,.05);}
+#chatBox::-webkit-scrollbar-thumb{background:rgba(107,143,78,.4);border-radius:3px;}
+.cmsg{animation:cmApp .4s ease forwards;opacity:0;}
+@keyframes cmApp{to{opacity:1;transform:none;}from{opacity:0;transform:translateY(8px);}}
+.cbub{display:inline-block;padding:9px 14px;border-radius:12px;font-size:.8rem;line-height:1.55;max-width:85%;}
+.cu .cbub{background:rgba(107,143,78,.3);border:1px solid rgba(107,143,78,.4);color:var(--mist);border-radius:12px 12px 3px 12px;float:right;}
+.ca .cbub{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);color:rgba(255,255,255,.82);border-radius:12px 12px 12px 3px;}
+.clbl{font-size:.66rem;color:rgba(255,255,255,.32);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.cu{text-align:right;}
+.tind{display:flex;gap:4px;align-items:center;padding:9px 14px;background:rgba(255,255,255,.06);border-radius:12px;width:fit-content;}
+.td{width:5px;height:5px;background:rgba(255,255,255,.38);border-radius:50%;animation:tB 1.4s ease-in-out infinite;}
+.td:nth-child(2){animation-delay:.2s;}
+.td:nth-child(3){animation-delay:.4s;}
+@keyframes tB{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-5px);}}
+.ai-inp-area{display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);}
+.ai-inp{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:10px 13px;color:white;font-size:.8rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .3s;}
+.ai-inp::placeholder{color:rgba(255,255,255,.28);}
+.ai-inp:focus{border-color:rgba(107,143,78,.5);}
+.ai-snd{background:var(--fl);border:none;border-radius:9px;padding:10px 16px;color:white;cursor:pointer;font-size:.82rem;font-family:'DM Sans',sans-serif;transition:all .3s;}
+.ai-snd:hover{background:var(--moss);transform:scale(1.05);}
+
+/* PROJECTS */
+.ph{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
+.va{color:var(--moss);text-decoration:none;font-size:.86rem;font-weight:600;display:flex;align-items:center;gap:8px;transition:gap .3s;}
+.va:hover{gap:16px;}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.pc{border-radius:20px;overflow:hidden;background:white;border:1px solid rgba(107,143,78,.12);transition:all .5s cubic-bezier(.25,.46,.45,.94);box-shadow:0 4px 18px rgba(26,46,26,.06);cursor:pointer;}
+.pc:hover{box-shadow:0 22px 55px rgba(26,46,26,.15);border-color:rgba(107,143,78,.32);}
+.pc.lg{grid-column:span 2;}
+.pvis{height:195px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.pc.lg .pvis{height:252px;}
+.pv-web{background:linear-gradient(135deg,#e8f4e8,#c8dfc8);}
+.pv-app{background:linear-gradient(135deg,#1a2e1a,#2d4a2d);}
+.pv-ui{background:linear-gradient(135deg,#f0f7e8,#d4e6c3);}
+.pv-ai{background:linear-gradient(135deg,#0d1a0d,#1a3020);}
+.pv-sh{background:linear-gradient(135deg,#2d4a2d,#4a7c4a);}
+/* Browser mock */
+.bmk{width:84%;background:white;border-radius:11px;box-shadow:0 8px 28px rgba(0,0,0,.18);overflow:hidden;transform:perspective(600px) rotateX(8deg);transition:transform .5s;}
+.pc:hover .bmk{transform:perspective(600px) rotateX(0deg);}
+.bbr{background:#f0f0f0;padding:7px 12px;display:flex;align-items:center;gap:5px;}
+.bd{width:7px;height:7px;border-radius:50%;}
+.bd:nth-child(1){background:#ff5f57;}
+.bd:nth-child(2){background:#ffbd2e;}
+.bd:nth-child(3){background:#28ca41;}
+.burl{flex:1;background:white;border-radius:4px;padding:3px 9px;font-size:.58rem;color:#888;margin-left:7px;}
+.bcnt{padding:10px;background:linear-gradient(135deg,#f8fdf5,#eff7e8);min-height:55px;display:flex;flex-direction:column;gap:5px;}
+.bbar{height:5px;border-radius:3px;background:linear-gradient(90deg,var(--fl),var(--sage));}
+/* Phone */
+.pmk{width:52px;height:86px;background:#1a1a1a;border-radius:9px;border:2px solid rgba(255,255,255,.1);padding:4px;box-shadow:0 10px 28px rgba(0,0,0,.38);transform:perspective(400px) rotateY(-14deg);transition:transform .5s;}
+.pc:hover .pmk{transform:perspective(400px) rotateY(0deg);}
+.pscr{background:linear-gradient(135deg,var(--fm),var(--fl));border-radius:5px;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;}
+.pinfo{padding:22px;}
+.ptyp{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--moss);margin-bottom:7px;}
+.pttl{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--fd);margin-bottom:7px;line-height:1.3;}
+.pdesc{font-size:.81rem;color:#6b8a6b;line-height:1.65;margin-bottom:16px;}
+.ptags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px;}
+.ptag{background:rgba(107,143,78,.1);border:1px solid rgba(107,143,78,.2);color:var(--fm);padding:3px 11px;border-radius:50px;font-size:.7rem;font-weight:500;}
+.plnks{display:flex;gap:9px;}
+.pl{padding:7px 17px;border-radius:50px;font-size:.76rem;font-weight:600;text-decoration:none;transition:all .3s;}
+.pl.pri{background:var(--fd);color:white;}
+.pl.pri:hover{background:var(--fl);transform:translateY(-2px);}
+.pl.sec{border:1.5px solid rgba(107,143,78,.33);color:var(--fm);}
+.pl.sec:hover{background:var(--fd);color:white;border-color:var(--fd);}
+
+/* SERVICES */
+#services{background:linear-gradient(180deg,var(--white),#eef6e6);padding:100px 60px;}
+.sv-inner{max-width:1280px;margin:0 auto;}
+.sv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:56px;}
+.svc{background:white;border:1px solid rgba(107,143,78,.15);border-radius:19px;padding:34px 26px;transition:all .4s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden;}
+.svc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--fl),var(--sage));transform:scaleX(0);transition:transform .4s;}
+.svc:hover::after{transform:scaleX(1);}
+.svc:hover{transform:translateY(-8px);box-shadow:0 18px 46px rgba(26,46,26,.11);border-color:rgba(107,143,78,.28);}
+.sv-ic{width:54px;height:54px;background:linear-gradient(135deg,rgba(107,143,78,.15),rgba(74,124,74,.09));border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:1.55rem;margin-bottom:22px;transition:transform .3s;}
+.svc:hover .sv-ic{transform:scale(1.1) rotate(-5deg);}
+.sv-ttl{font-family:'Playfair Display',serif;font-size:1.08rem;font-weight:700;color:var(--fd);margin-bottom:9px;}
+.sv-desc{font-size:.81rem;color:#6b8a6b;line-height:1.72;}
+
+/* CONTACT */
+.ct-wrap{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:start;}
+.ct-cards{display:flex;flex-direction:column;gap:12px;margin-top:34px;}
+.ctc{display:flex;align-items:center;gap:14px;background:white;border:1px solid rgba(107,143,78,.15);border-radius:13px;padding:15px 18px;transition:all .3s;text-decoration:none;color:inherit;}
+.ctc:hover{border-color:rgba(107,143,78,.38);box-shadow:0 7px 22px rgba(26,46,26,.08);transform:translateX(6px);}
+.ct-ic{width:42px;height:42px;background:linear-gradient(135deg,var(--fl),var(--moss));border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;color:white;flex-shrink:0;}
+.ct-lbl{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--moss);margin-bottom:2px;}
+.ct-val{font-size:.88rem;color:var(--fd);font-weight:500;}
+/* Form */
+.cform{background:white;border:1px solid rgba(107,143,78,.15);border-radius:22px;padding:42px;box-shadow:0 9px 36px rgba(26,46,26,.06);}
+.fttl{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--fd);margin-bottom:5px;}
+.fsub{font-size:.83rem;color:#6b8a6b;margin-bottom:28px;}
+.fg{margin-bottom:18px;}
+.fl-lbl{display:block;font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--fm);margin-bottom:7px;}
+.fi,.fta,.fsel{width:100%;background:#f8fdf5;border:1.5px solid rgba(107,143,78,.2);border-radius:11px;padding:13px 16px;font-size:.88rem;font-family:'DM Sans',sans-serif;color:var(--fd);outline:none;transition:border-color .3s,box-shadow .3s;resize:none;}
+.fi:focus,.fta:focus,.fsel:focus{border-color:var(--fl);box-shadow:0 0 0 3px rgba(74,124,74,.1);}
+.fta{height:115px;}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fsub-btn{width:100%;background:var(--fd);color:white;border:none;border-radius:11px;padding:15px;font-size:.9rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .3s;letter-spacing:.04em;margin-top:4px;}
+.fsub-btn:hover{background:var(--fl);transform:translateY(-2px);box-shadow:0 8px 22px rgba(26,46,26,.24);}
+.smsg{display:none;background:linear-gradient(135deg,#eef8e8,#d4f0c4);border:1px solid rgba(107,143,78,.28);border-radius:11px;padding:14px 18px;font-size:.86rem;color:var(--fm);font-weight:500;text-align:center;margin-top:14px;}
+.smsg.on{display:block;}
+
+/* FOOTER */
+footer{background:var(--fd);color:rgba(255,255,255,.65);padding:56px 60px;}
+.ft-in{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:22px;}
+.ft-logo{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:white;}
+.ft-logo span{color:var(--sage);font-style:italic;}
+.ft-copy{font-size:.8rem;color:rgba(255,255,255,.36);}
+.socials{display:flex;gap:10px;}
+.sb{width:38px;height:38px;border:1px solid rgba(255,255,255,.14);border-radius:9px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);font-size:.86rem;text-decoration:none;transition:all .3s;cursor:pointer;}
+.sb:hover{background:rgba(107,143,78,.28);border-color:rgba(107,143,78,.48);color:white;transform:translateY(-3px);}
+
+/* Reveal */
+.rev{opacity:0;transform:translateY(38px);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94);}
+.rev.vis{opacity:1;transform:translateY(0);}
+
+/* Responsive */
+@media(max-width:1024px){
+  section{padding:70px 32px;}
+  nav{padding:16px 32px;}
+  .nl{gap:22px;}
+  .about-wrap{grid-template-columns:1fr;gap:38px;}
+  .ai-grid{grid-template-columns:1fr;}
+  .pgrid{grid-template-columns:1fr 1fr;}
+  .pc.lg{grid-column:span 2;}
+  .sv-grid{grid-template-columns:repeat(2,1fr);}
+  .ct-wrap{grid-template-columns:1fr;gap:38px;}
+  .ai-wrap{margin:0 20px;padding:48px 36px;}
+}
+@media(max-width:768px){
+  nav{padding:13px 18px;}
+  .nl{display:none;}
+  section{padding:56px 18px;}
+  .pgrid{grid-template-columns:1fr;}
+  .pc.lg{grid-column:span 1;}
+  .sv-grid{grid-template-columns:1fr;}
+  .ai-feats{grid-template-columns:1fr;}
+  .ai-wrap{margin:0 14px;padding:36px 20px;}
+  .fr{grid-template-columns:1fr;}
+  .cform{padding:26px 18px;}
+  footer{padding:38px 18px;}
+  .ft-in{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-t" id="curT"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="logo">Adx<span>dha</span></a>
+  <ul class="nl">
+    <li><a href="#about">About</a></li>
+    <li><a href="#aiwrap">AI Agent</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <!-- Forest SVG -->
+  <svg style="position:absolute;bottom:0;left:0;width:100%;height:88%;pointer-events:none;z-index:2;" viewBox="0 0 1440 700" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="blur2"><feGaussianBlur stdDeviation="2.5"/></filter>
+      <filter id="blur5"><feGaussianBlur stdDeviation="5"/></filter>
+    </defs>
+    <!-- Far bg trees -->
+    <g opacity="0.16" filter="url(#blur5)">
+      <polygon points="60,700 108,380 156,700" fill="#1a2e1a"/>
+      <polygon points="200,700 255,360 310,700" fill="#2d4a2d"/>
+      <polygon points="380,700 440,350 500,700" fill="#1a2e1a"/>
+      <polygon points="560,700 620,340 680,700" fill="#2d4a2d"/>
+      <polygon points="740,700 800,355 860,700" fill="#1a2e1a"/>
+      <polygon points="920,700 980,345 1040,700" fill="#2d4a2d"/>
+      <polygon points="1100,700 1160,360 1220,700" fill="#1a2e1a"/>
+      <polygon points="1280,700 1340,350 1400,700" fill="#2d4a2d"/>
+    </g>
+    <!-- Mid trees -->
+    <g opacity="0.42" filter="url(#blur2)">
+      <rect x="95" y="560" width="10" height="140" fill="#4a2c1a" rx="2"/><polygon points="100,320 62,560 138,560" fill="#1a2e1a"/><polygon points="100,400 56,575 144,575" fill="#1f3825"/><polygon points="100,460 50,590 150,590" fill="#2d4a2d"/>
+      <rect x="245" y="540" width="10" height="160" fill="#4a2c1a" rx="2"/><polygon points="250,290 208,540 292,540" fill="#1a2e1a"/><polygon points="250,375 204,558 296,558" fill="#1f3825"/><polygon points="250,440 198,575 302,575" fill="#2d4a2d"/>
+      <rect x="415" y="555" width="10" height="145" fill="#4a2c1a" rx="2"/><polygon points="420,310 378,555 462,555" fill="#1a2e1a"/><polygon points="420,395 372,572 468,572" fill="#2d4a2d"/>
+      <rect x="598" y="545" width="10" height="155" fill="#4a2c1a" rx="2"/><polygon points="603,300 558,545 648,545" fill="#1a2e1a"/><polygon points="603,385 552,562 654,562" fill="#1f3825"/><polygon points="603,450 547,578 659,578" fill="#2d4a2d"/>
+      <rect x="778" y="552" width="10" height="148" fill="#4a2c1a" rx="2"/><polygon points="783,315 740,552 826,552" fill="#1a2e1a"/><polygon points="783,400 735,568 831,568" fill="#2d4a2d"/>
+      <rect x="958" y="542" width="10" height="158" fill="#4a2c1a" rx="2"/><polygon points="963,295 918,542 1008,542" fill="#1a2e1a"/><polygon points="963,380 912,560 1014,560" fill="#1f3825"/><polygon points="963,445 907,575 1019,575" fill="#2d4a2d"/>
+      <rect x="1138" y="548" width="10" height="152" fill="#4a2c1a" rx="2"/><polygon points="1143,305 1100,548 1186,548" fill="#1a2e1a"/><polygon points="1143,390 1095,564 1191,564" fill="#2d4a2d"/>
+      <rect x="1318" y="552" width="10" height="148" fill="#4a2c1a" rx="2"/><polygon points="1323,312 1280,552 1366,552" fill="#1a2e1a"/><polygon points="1323,398 1275,568 1371,568" fill="#2d4a2d"/>
+    </g>
+    <!-- Foreground tall trees -->
+    <!-- T1 -->
+    <g id="ft1" style="transform-origin:58px 700px">
+      <rect x="50" y="500" width="16" height="200" fill="#3d2218" rx="3"/>
+      <polygon points="58,200 18,500 98,500" fill="#1a2e1a"/>
+      <polygon points="58,295 12,518 104,518" fill="#1f3825"/>
+      <polygon points="58,368 6,538 110,538" fill="#243a24"/>
+      <polygon points="58,432 2,555 114,555" fill="#2d4a2d"/>
+      <polygon points="58,488 0,572 116,572" fill="#234030"/>
+    </g>
+    <!-- T2 -->
+    <g id="ft2" style="transform-origin:198px 700px">
+      <rect x="190" y="515" width="16" height="185" fill="#4a2c1a" rx="3"/>
+      <polygon points="198,230 156,515 240,515" fill="#1a2e1a"/>
+      <polygon points="198,325 150,533 246,533" fill="#1f3825"/>
+      <polygon points="198,398 144,552 252,552" fill="#2d4a2d"/>
+      <polygon points="198,458 140,570 256,570" fill="#234030"/>
+      <polygon points="198,508 136,587 260,587" fill="#2d4a2d"/>
+    </g>
+    <!-- T3 Big center-left -->
+    <g id="ft3" style="transform-origin:368px 700px">
+      <rect x="360" y="490" width="17" height="210" fill="#3d2218" rx="3"/>
+      <polygon points="368,165 325,490 411,490" fill="#1a2e1a"/>
+      <polygon points="368,262 318,510 418,510" fill="#1f3825"/>
+      <polygon points="368,342 312,530 424,530" fill="#243a24"/>
+      <polygon points="368,410 306,550 430,550" fill="#2d4a2d"/>
+      <polygon points="368,466 302,567 434,567" fill="#2d4a2d"/>
+      <polygon points="368,512 298,584 438,584" fill="#234030"/>
+    </g>
+    <!-- T4 -->
+    <g id="ft4" style="transform-origin:548px 700px">
+      <rect x="540" y="505" width="16" height="195" fill="#4a2c1a" rx="3"/>
+      <polygon points="548,245 508,505 588,505" fill="#1a2e1a"/>
+      <polygon points="548,338 502,524 594,524" fill="#1f3825"/>
+      <polygon points="548,410 496,542 600,542" fill="#2d4a2d"/>
+      <polygon points="548,468 491,558 605,558" fill="#234030"/>
+    </g>
+    <!-- T5 Tall center -->
+    <g id="ft5" style="transform-origin:718px 700px">
+      <rect x="710" y="495" width="17" height="205" fill="#3d2218" rx="3"/>
+      <polygon points="718,185 675,495 761,495" fill="#1a2e1a"/>
+      <polygon points="718,280 668,515 768,515" fill="#1f3825"/>
+      <polygon points="718,358 662,535 774,535" fill="#243a24"/>
+      <polygon points="718,424 656,554 780,554" fill="#2d4a2d"/>
+      <polygon points="718,480 652,570 784,570" fill="#234030"/>
+    </g>
+    <!-- T6 -->
+    <g id="ft6" style="transform-origin:888px 700px">
+      <rect x="880" y="510" width="16" height="190" fill="#4a2c1a" rx="3"/>
+      <polygon points="888,255 848,510 928,510" fill="#1a2e1a"/>
+      <polygon points="888,348 842,528 934,528" fill="#1f3825"/>
+      <polygon points="888,418 836,547 940,547" fill="#2d4a2d"/>
+      <polygon points="888,475 831,563 945,563" fill="#234030"/>
+    </g>
+    <!-- T7 Tall right -->
+    <g id="ft7" style="transform-origin:1068px 700px">
+      <rect x="1060" y="478" width="17" height="222" fill="#3d2218" rx="3"/>
+      <polygon points="1068,170 1025,478 1111,478" fill="#1a2e1a"/>
+      <polygon points="1068,266 1018,498 1118,498" fill="#1f3825"/>
+      <polygon points="1068,346 1011,518 1125,518" fill="#243a24"/>
+      <polygon points="1068,414 1005,538 1131,538" fill="#2d4a2d"/>
+      <polygon points="1068,470 1000,555 1136,555" fill="#234030"/>
+      <polygon points="1068,516 996,572 1140,572" fill="#2d4a2d"/>
+    </g>
+    <!-- T8 -->
+    <g id="ft8" style="transform-origin:1248px 700px">
+      <rect x="1240" y="505" width="16" height="195" fill="#4a2c1a" rx="3"/>
+      <polygon points="1248,225 1208,505 1288,505" fill="#1a2e1a"/>
+      <polygon points="1248,318 1202,524 1294,524" fill="#1f3825"/>
+      <polygon points="1248,390 1196,542 1300,542" fill="#2d4a2d"/>
+      <polygon points="1248,450 1191,558 1305,558" fill="#234030"/>
+    </g>
+    <!-- T9 far right -->
+    <g id="ft9" style="transform-origin:1398px 700px">
+      <rect x="1390" y="525" width="16" height="175" fill="#4a2c1a" rx="3"/>
+      <polygon points="1398,285 1358,525 1438,525" fill="#1a2e1a"/>
+      <polygon points="1398,375 1352,544 1444,544" fill="#1f3825"/>
+      <polygon points="1398,438 1346,562 1450,562" fill="#2d4a2d"/>
+    </g>
+    <!-- Ground bushes -->
+    <ellipse cx="100" cy="695" rx="78" ry="22" fill="#1a3020" opacity="0.9"/>
+    <ellipse cx="280" cy="698" rx="95" ry="20" fill="#2d4a2d" opacity="0.85"/>
+    <ellipse cx="460" cy="695" rx="88" ry="23" fill="#1a3020" opacity="0.9"/>
+    <ellipse cx="640" cy="698" rx="105" ry="20" fill="#2d4a2d" opacity="0.82"/>
+    <ellipse cx="820" cy="695" rx="92" ry="24" fill="#1a3020" opacity="0.9"/>
+    <ellipse cx="1000" cy="698" rx="82" ry="21" fill="#2d4a2d" opacity="0.86"/>
+    <ellipse cx="1180" cy="695" rx="98" ry="23" fill="#1a3020" opacity="0.9"/>
+    <ellipse cx="1360" cy="698" rx="88" ry="20" fill="#2d4a2d" opacity="0.83"/>
+    <!-- Light shafts -->
+    <g opacity="0.06">
+      <polygon points="340,0 320,700 360,700" fill="#e8d5a3"/>
+      <polygon points="710,0 690,700 730,700" fill="#e8d5a3"/>
+      <polygon points="1070,0 1050,700 1090,700" fill="#e8d5a3"/>
+    </g>
+  </svg>
+
+  <!-- Sun rays -->
+  <div class="sun" style="position:absolute;top:-8%;left:58%;width:520px;height:520px;pointer-events:none;z-index:1;"></div>
+  <!-- Mist -->
+  <div class="mist m1"></div>
+  <div class="mist m2"></div>
+  <div class="mist m3"></div>
+  <!-- Ground layers -->
+  <div class="gnd gf"></div>
+  <div class="gnd gm"></div>
+  <div class="gnd gn"></div>
+  <!-- Particles container -->
+  <div id="pts" style="position:absolute;inset:0;pointer-events:none;z-index:3;overflow:hidden;"></div>
+
+  <div class="hc">
+    <div class="badge">🌿 Available for Freelance</div>
+    <h1 class="ht">
+      Creative Developer
+      <span class="acc">Adxdha</span>
+    </h1>
+    <p class="hsub">Crafting digital experiences with the precision of nature</p>
+    <p class="hdesc">Full-stack developer & AI agent builder creating immersive websites, intelligent apps, and stunning UI/UX. From concept to code — every pixel is purposeful.</p>
+    <div class="hbtns">
+      <a href="#projects" class="bp"><span>View My Work</span></a>
+      <a href="#contact" class="bs">Let's Connect</a>
+    </div>
+  </div>
+  <div class="sci"><span>Scroll</span><div class="scl"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section style="padding:100px 60px;background:var(--white);">
+  <div class="about-wrap">
+    <div class="rev">
+      <div class="acard">
+        <div class="avt">A</div>
+        <div class="anm">Adxdha</div>
+        <div class="arl">Developer · Designer · AI Builder</div>
+        <p style="font-size:.87rem;color:#6b8a6b;line-height:1.78;">I build beautiful, functional digital experiences that blend clean code with thoughtful design. Specializing in AI-powered apps, modern web, and user-centric interfaces.</p>
+        <div class="astats">
+          <div style="text-align:center"><div class="stat-n">15+</div><div class="stat-l">Projects</div></div>
+          <div style="text-align:center"><div class="stat-n">3+</div><div class="stat-l">Years Exp</div></div>
+          <div style="text-align:center"><div class="stat-n">10+</div><div class="stat-l">Clients</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="rev" style="animation-delay:.2s">
+      <div class="stag">Who I Am</div>
+      <h2 class="sttl">Building things that <em>matter</em></h2>
+      <p class="sdesc" style="margin-bottom:26px;">I'm a passionate developer based in Tamil Nadu, India who turns ideas into elegant digital solutions. My work lives at the intersection of technology and creativity — where clean code meets beautiful design.</p>
+      <p class="sdesc">Whether it's a full-stack web app, a native mobile experience, a custom AI agent, or a pixel-perfect UI — I bring genuine care to every project.</p>
+      <div class="chips">
+        <span class="chip">React / Next.js</span><span class="chip">Node.js</span><span class="chip">Python</span>
+        <span class="chip">AI / LLM</span><span class="chip">Flutter</span><span class="chip">Figma</span>
+        <span class="chip">Three.js</span><span class="chip">MongoDB</span><span class="chip">Firebase</span>
+        <span class="chip">TailwindCSS</span><span class="chip">UI/UX Design</span><span class="chip">REST APIs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI AGENT -->
+<div style="padding:0 0 80px;" id="aiwrap">
+<div class="ai-wrap rev">
+  <div class="ai-grid">
+    <div>
+      <div class="stag ai-stag">AI Capabilities</div>
+      <h2 class="ai-ttl">Meet Your <em>AI Agent</em><br>Built by Adxdha</h2>
+      <p class="ai-desc">I specialize in building custom AI agents and LLM-powered applications that automate workflows, answer questions, and create value. Try the live demo →</p>
+      <div class="ai-feats">
+        <div class="ai-feat"><div class="ai-fi">🤖</div><div class="ai-ftl">Custom AI Agents</div><div class="ai-fds">Tailored agents that understand your business goals</div></div>
+        <div class="ai-feat"><div class="ai-fi">💬</div><div class="ai-ftl">Chatbot Systems</div><div class="ai-fds">Intelligent conversational interfaces for customer support</div></div>
+        <div class="ai-feat"><div class="ai-fi">⚡</div><div class="ai-ftl">Automation Flows</div><div class="ai-fds">Smart workflows that save time and eliminate repetition</div></div>
+        <div class="ai-feat"><div class="ai-fi">🧠</div><div class="ai-ftl">RAG & Memory</div><div class="ai-fds">AI that learns from your documents and retains context</div></div>
+      </div>
+    </div>
+    <div class="demo">
+      <div class="demo-hd">
+        <div class="ddot"></div><div class="ddot"></div><div class="ddot"></div>
+        <span class="demo-lbl">Adxdha AI Agent · Live</span>
+      </div>
+      <div id="chatBox">
+        <div class="cmsg ca">
+          <div class="clbl">AI Agent</div>
+          <div class="cbub">👋 Hi! I'm Adxdha's AI Agent. Ask me about services, projects, pricing or anything else!</div>
+        </div>
+      </div>
+      <div class="ai-inp-area">
+        <input class="ai-inp" id="aiIn" type="text" placeholder="Ask about services, pricing, projects...">
+        <button class="ai-snd" id="aiSnd">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects" style="padding:80px 60px;">
+<div style="max-width:1280px;margin:0 auto;">
+  <div class="ph rev">
+    <div>
+      <div class="stag">My Work</div>
+      <h2 class="sttl">Featured <em>Projects</em></h2>
+    </div>
+    <a href="#contact" class="va">Hire Me →</a>
+  </div>
+
+  <div class="pgrid">
+
+    <!-- 1: E-commerce Website -->
+    <div class="pc lg rev">
+      <div class="pvis pv-web">
+        <div class="bmk">
+          <div class="bbr"><div class="bd"></div><div class="bd"></div><div class="bd"></div><div class="burl">🔒 greenleaf-store.com</div></div>
+          <div class="bcnt">
+            <div class="bbar" style="width:100%;height:9px;background:linear-gradient(90deg,#2d4a2d,#4a7c4a);border-radius:3px;"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:3px;">
+              <div style="height:26px;background:linear-gradient(135deg,#eef5e8,#d4e6c3);border-radius:4px;"></div>
+              <div style="height:26px;background:linear-gradient(135deg,#f0f7e8,#c8dfc8);border-radius:4px;"></div>
+              <div style="height:26px;background:linear-gradient(135deg,#eef5e8,#d4e6c3);border-radius:4px;"></div>
+              <div style="height:26px;background:linear-gradient(135deg,#f0f7e8,#c8dfc8);border-radius:4px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pinfo">
+        <div class="ptyp">🌐 Website</div>
+        <div class="pttl">GreenLeaf — Organic E-commerce Platform</div>
+        <div class="pdesc">A fully functional e-commerce website with product catalog, cart, Stripe payments, admin dashboard, and real-time inventory management.</div>
+        <div class="ptags"><span class="ptag">Next.js</span><span class="ptag">Stripe</span><span class="ptag">MongoDB</span><span class="ptag">TailwindCSS</span><span class="ptag">Node.js</span></div>
+        <div class="plnks"><a href="#contact" class="pl pri">View Live</a><a href="#contact" class="pl sec">Case Study</a></div>
+      </div>
+    </div>
+
+    <!-- 2: Mobile App -->
+    <div class="pc rev">
+      <div class="pvis pv-app">
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div class="pmk"><div class="pscr"><div style="width:18px;height:3px;background:rgba(255,255,255,.5);border-radius:2px;"></div><div style="width:12px;height:3px;background:rgba(255,255,255,.3);border-radius:2px;"></div><div style="width:16px;height:3px;background:rgba(255,255,255,.4);border-radius:2px;"></div></div></div>
+          <div class="pmk" style="transform:perspective(400px) rotateY(5deg) scale(.82);opacity:.65;"><div class="pscr"></div></div>
+        </div>
+      </div>
+      <div class="pinfo">
+        <div class="ptyp">📱 Mobile App</div>
+        <div class="pttl">ForestMind — Meditation App</div>
+        <div class="pdesc">Cross-platform iOS & Android meditation app with guided sessions, mood tracking, breathing exercises, and sleep sounds.</div>
+        <div class="ptags"><span class="ptag">Flutter</span><span class="ptag">Firebase</span><span class="ptag">Dart</span></div>
+        <div class="plnks"><a href="#contact" class="pl pri">App Store</a><a href="#contact" class="pl sec">Details</a></div>
+      </div>
+    </div>
+
+    <!-- 3: UI/UX -->
+    <div class="pc rev">
+      <div class="pvis pv-ui" style="flex-direction:column;gap:7px;padding:14px;">
+        <div style="display:flex;gap:7px;">
+          <div style="flex:1;height:38px;background:linear-gradient(135deg,#2d4a2d,#4a7c4a);border-radius:7px;"></div>
+          <div style="width:38px;height:38px;background:linear-gradient(135deg,#6b8f4e,#8fad6a);border-radius:7px;"></div>
+        </div>
+        <div style="display:flex;gap:7px;">
+          <div style="width:38px;height:58px;background:#f0f7e8;border:1px solid rgba(107,143,78,.3);border-radius:7px;"></div>
+          <div style="flex:1;height:58px;background:white;border:1px solid rgba(107,143,78,.2);border-radius:7px;padding:7px;">
+            <div style="height:5px;background:linear-gradient(90deg,#4a7c4a,#8fad6a);border-radius:3px;width:80%;margin-bottom:4px;"></div>
+            <div style="height:5px;background:rgba(107,143,78,.2);border-radius:3px;width:58%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="pinfo">
+        <div class="ptyp">🎨 UI/UX Design</div>
+        <div class="pttl">NatureBank — Finance Dashboard</div>
+        <div class="pdesc">Complete UI/UX design system with 40+ screens, component library, design tokens, and interactive Figma prototype.</div>
+        <div class="ptags"><span class="ptag">Figma</span><span class="ptag">Design System</span><span class="ptag">Prototype</span></div>
+        <div class="plnks"><a href="#contact" class="pl pri">View Design</a></div>
+      </div>
+    </div>
+
+    <!-- 4: AI Agent -->
+    <div class="pc lg rev">
+      <div class="pvis pv-ai" style="flex-direction:column;gap:7px;padding:18px;align-items:flex-start;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px;"><div style="width:7px;height:7px;background:#28ca41;border-radius:50%;"></div><span style="font-size:.68rem;color:rgba(255,255,255,.5);">AI Agent Online</span></div>
+        <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 13px;font-size:.7rem;color:rgba(255,255,255,.7);max-width:78%;">Analyze last month's sales and generate a report</div>
+        <div style="background:rgba(107,143,78,.22);border:1px solid rgba(107,143,78,.32);border-radius:9px;padding:9px 13px;font-size:.7rem;color:rgba(255,255,255,.85);max-width:88%;align-self:flex-end;">✅ Report ready. Revenue ↑23%. Top: Premium Plan. Suggest expanding Q3 marketing.</div>
+      </div>
+      <div class="pinfo">
+        <div class="ptyp">🤖 AI Agent</div>
+        <div class="pttl">BizBot — AI Business Intelligence Agent</div>
+        <div class="pdesc">AI-powered business agent connecting to your data sources — analyzes trends, generates reports, answers natural language queries, and sends automated summaries via email or Slack.</div>
+        <div class="ptags"><span class="ptag">OpenAI API</span><span class="ptag">LangChain</span><span class="ptag">Python</span><span class="ptag">PostgreSQL</span><span class="ptag">FastAPI</span></div>
+        <div class="plnks"><a href="#contact" class="pl pri">Try Demo</a><a href="#contact" class="pl sec">GitHub</a></div>
+      </div>
+    </div>
+
+    <!-- 5: Sample website -->
+    <div class="pc rev">
+      <div class="pvis pv-web">
+        <div class="bmk" style="width:80%;">
+          <div class="bbr"><div class="bd"></div><div class="bd"></div><div class="bd"></div><div class="burl">🔒 archvision.studio</div></div>
+          <div class="bcnt">
+            <div style="height:11px;background:linear-gradient(90deg,#1a2e1a,#4a7c4a);border-radius:4px;width:48%;"></div>
+            <div class="bbar short" style="width:76%;height:5px;"></div>
+            <div class="bbar short" style="width:58%;height:5px;opacity:.4;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="pinfo">
+        <div class="ptyp">🌐 Sample Website</div>
+        <div class="pttl">ArchVision — Architecture Portfolio</div>
+        <div class="pdesc">Award-winning portfolio with 3D animations, parallax scroll, and smooth transitions for a top architecture firm.</div>
+        <div class="ptags"><span class="ptag">Three.js</span><span class="ptag">GSAP</span><span class="ptag">React</span></div>
+        <div class="plnks"><a href="#contact" class="pl pri">View Site</a></div>
+      </div>
+    </div>
+
+    <!-- 6: Sample UI kit -->
+    <div class="pc rev">
+      <div class="pvis pv-sh" style="flex-direction:column;gap:7px;padding:14px;align-items:center;justify-content:center;">
+        <div style="background:rgba(255,255,255,.12);border-radius:9px;width:78px;height:48px;display:flex;align-items:center;justify-content:center;"><span style="font-size:1.3rem;">🛍️</span></div>
+        <div style="width:72px;height:5px;background:rgba(255,255,255,.3);border-radius:3px;"></div>
+        <div style="width:52px;height:4px;background:rgba(255,255,255,.18);border-radius:3px;"></div>
+      </div>
+      <div class="pinfo">
+        <div class="ptyp">🎨 Sample UI Kit</div>
+        <div class="pttl">ShopFlow — E-commerce UI Kit</div>
+        <div class="pdesc">60-screen e-commerce UI kit with product pages, checkout, wishlist, reviews, and admin panel — all in Figma.</div>
+        <div class="ptags"><span class="ptag">Figma</span><span class="ptag">UI Kit</span><span class="ptag">E-commerce</span></div>
+        <div class="plnks"><a href="#contact" class="pl pri">Get Kit</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+<div class="sv-inner">
+  <div class="rev" style="text-align:center;max-width:580px;margin:0 auto;">
+    <div class="stag" style="justify-content:center;">What I Do</div>
+    <h2 class="sttl">Services I <em>Offer</em></h2>
+    <p class="sdesc" style="margin:0 auto;">From idea to launch — I cover every layer of the digital stack with craft and care.</p>
+  </div>
+  <div class="sv-grid">
+    <div class="svc rev"><div class="sv-ic">🌐</div><div class="sv-ttl">Web Development</div><div class="sv-desc">Full-stack websites & web apps with React, Next.js, Node.js — fast, responsive, and production-ready from day one.</div></div>
+    <div class="svc rev" style="animation-delay:.1s"><div class="sv-ic">📱</div><div class="sv-ttl">Mobile Apps</div><div class="sv-desc">Cross-platform iOS & Android apps with Flutter — native performance, beautiful UI, and real-time features.</div></div>
+    <div class="svc rev" style="animation-delay:.2s"><div class="sv-ic">🤖</div><div class="sv-ttl">AI Agent Development</div><div class="sv-desc">Custom AI agents, chatbots, and LLM-powered tools that automate your workflows and delight your users.</div></div>
+    <div class="svc rev" style="animation-delay:.3s"><div class="sv-ic">🎨</div><div class="sv-ttl">UI/UX Design</div><div class="sv-desc">User research, wireframing, prototyping, and pixel-perfect UI that converts visitors into loyal customers.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:linear-gradient(180deg,#f4faf0,var(--white));padding:100px 60px;">
+<div class="ct-wrap">
+  <div class="rev">
+    <div class="stag">Get In Touch</div>
+    <h2 class="sttl">Let's Build Something <em>Amazing</em></h2>
+    <p class="sdesc" style="margin-bottom:34px;">Have a project in mind? I'd love to hear about it. Send me a message and I'll get back to you within 24 hours.</p>
+    <div class="ct-cards">
+      <a href="mailto:adxdha@gmail.com" class="ctc">
+        <div class="ct-ic">✉️</div>
+        <div><div class="ct-lbl">Email</div><div class="ct-val">adxdha@gmail.com</div></div>
+        <span style="color:var(--moss);margin-left:auto;">→</span>
+      </a>
+      <a href="#" class="ctc">
+        <div class="ct-ic">💼</div>
+        <div><div class="ct-lbl">LinkedIn</div><div class="ct-val">linkedin.com/in/adxdha</div></div>
+        <span style="color:var(--moss);margin-left:auto;">→</span>
+      </a>
+      <a href="#" class="ctc">
+        <div class="ct-ic">🐱</div>
+        <div><div class="ct-lbl">GitHub</div><div class="ct-val">github.com/adxdha</div></div>
+        <span style="color:var(--moss);margin-left:auto;">→</span>
+      </a>
+      <div class="ctc" style="background:linear-gradient(135deg,rgba(107,143,78,.08),rgba(74,124,74,.04));">
+        <div class="ct-ic" style="background:linear-gradient(135deg,#c9a84c,#e8d5a3);">🕐</div>
+        <div><div class="ct-lbl">Response Time</div><div class="ct-val">Within 24 hours</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cform rev" style="animation-delay:.2s">
+    <div class="fttl">Send a Message</div>
+    <div class="fsub">Fill the form — I'll reach out directly 🌿</div>
+    <form id="cForm">
+      <div class="fr">
+        <div class="fg"><label class="fl-lbl">Your Name</label><input type="text" class="fi" id="fn" placeholder="John Doe" required></div>
+        <div class="fg"><label class="fl-lbl">Email Address</label><input type="email" class="fi" id="fe" placeholder="john@example.com" required></div>
+      </div>
+      <div class="fg">
+        <label class="fl-lbl">Service Needed</label>
+        <select class="fsel" id="fs">
+          <option value="">Select a service...</option>
+          <option>Web Development</option>
+          <option>Mobile App</option>
+          <option>AI Agent Development</option>
+          <option>UI/UX Design</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl-lbl">Budget Range</label>
+        <select class="fsel" id="fb">
+          <option value="">Select budget...</option>
+          <option>Under ₹10,000</option>
+          <option>₹10,000 – ₹50,000</option>
+          <option>₹50,000 – ₹1,00,000</option>
+          <option>Above ₹1,00,000</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl-lbl">Your Message</label><textarea class="fta" id="fm" placeholder="Tell me about your project, goals, and timeline..."></textarea></div>
+      <button type="submit" class="fsub-btn" id="sbtn">🌿 Send Message</button>
+      <div class="smsg" id="smsg">✅ Message sent! Your email client will open. I'll reply within 24 hours.</div>
+    </form>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-in">
+    <div class="ft-logo">Adx<span>dha</span></div>
+    <div class="ft-copy">© 2025 Adxdha · Crafted with 🌿 in Tamil Nadu, India</div>
+    <div class="socials">
+      <a class="sb" href="mailto:adxdha@gmail.com" title="Email">✉</a>
+      <a class="sb" href="#" title="GitHub">⚙</a>
+      <a class="sb" href="#" title="LinkedIn">in</a>
+      <a class="sb" href="#" title="Twitter">𝕏</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),curT=document.getElementById('curT');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function anim(){
+  tx+=(mx-tx)*.12;ty+=(my-ty)*.12;
+  curT.style.left=tx+'px';curT.style.top=ty+'px';
+  requestAnimationFrame(anim);
+})();
+document.querySelectorAll('a,button,.pc,.svc,.ai-feat').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2)';cur.style.background='var(--moss)';curT.style.transform='translate(-50%,-50%) scale(1.4)';});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';cur.style.background='var(--fl)';curT.style.transform='translate(-50%,-50%) scale(1)';});
+});
+
+// Tree sway
+const trees=['ft1','ft2','ft3','ft4','ft5','ft6','ft7','ft8','ft9'];
+trees.forEach((id,i)=>{
+  const el=document.getElementById(id);
+  if(!el)return;
+  const dur=3.5+(i%3)*1.2,del=i*0.55;
+  el.style.cssText+=`animation:tSway ${dur}s ${del}s ease-in-out infinite;`;
+});
+const ks=document.createElement('style');
+ks.textContent='@keyframes tSway{0%,100%{transform:rotate(0deg);}25%{transform:rotate(.7deg);}75%{transform:rotate(-.7deg);}}';
+document.head.appendChild(ks);
+
+// Particles
+const pts=document.getElementById('pts');
+const lc=['#4a7c4a','#6b8f4e','#8fad6a','#c9a84c','#a8c68f','#2d4a2d'];
+for(let i=0;i<18;i++){
+  const l=document.createElement('div');
+  l.className='leaf';
+  const s=4+Math.random()*9;
+  l.style.cssText=`width:${s}px;height:${s*.7}px;background:${lc[Math.floor(Math.random()*lc.length)]};left:${Math.random()*100}%;top:-20px;animation-duration:${9+Math.random()*13}s;animation-delay:${Math.random()*22}s;`;
+  pts.appendChild(l);
+}
+for(let i=0;i<28;i++){
+  const sp=document.createElement('div');
+  sp.className='spore';
+  const s=2+Math.random()*3.5;
+  sp.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;bottom:${8+Math.random()*28}%;animation-duration:${14+Math.random()*22}s;animation-delay:${Math.random()*24}s;background:rgba(${140+Math.random()*60|0},${168+Math.random()*44|0},${100+Math.random()*44|0},.7);`;
+  pts.appendChild(sp);
+}
+
+// Reveal
+const revEls=document.querySelectorAll('.rev');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:.08,rootMargin:'0px 0px -35px 0px'});
+revEls.forEach(r=>obs.observe(r));
+
+// Nav shrink
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.padding=window.scrollY>55?'11px 60px':'20px 60px';
+});
+
+// 3D tilt cards
+document.querySelectorAll('.pc,.svc').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;
+    card.style.transform=`perspective(600px) rotateX(${(y/r.height)*7}deg) rotateY(${-(x/r.width)*7}deg) translateY(-8px)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform='';card.style.transition='transform .5s ease';setTimeout(()=>card.style.transition='',500);});
+});
+
+// Parallax hero
+window.addEventListener('scroll',()=>{
+  const hc=document.querySelector('.hc');
+  const sy=window.scrollY;
+  if(hc&&sy<window.innerHeight){hc.style.transform=`translateY(${sy*.28}px)`;hc.style.opacity=1-sy/580;}
+});
+
+// AI Chat
+const rsp={
+  def:["Great question! Adxdha specializes in full-stack development, AI agents, mobile apps, and UI/UX design — every project gets personal attention. 🌿","Adxdha typically delivers in 1–4 weeks depending on scope. Use the contact form for a detailed timeline!","Services include Web Dev, Mobile Apps (Flutter), AI Agents, and UI/UX Design. Pricing starts from ₹10,000. 💚","Adxdha has built e-commerce sites, meditation apps, AI business agents, and beautiful Figma design systems! 🎨","You can reach Adxdha at adxdha@gmail.com or via the contact form below. Response within 24 hours. ✅"],
+  price:"Pricing depends on scope: Websites from ₹15,000, Mobile apps from ₹40,000, AI agents from ₹25,000, UI/UX from ₹10,000. Contact for a custom quote! 💰",
+  contact:"Email adxdha@gmail.com or fill the contact form. Reply guaranteed within 24 hours! 📧",
+  tech:"Tech stack: React, Next.js, Node.js, Python, Flutter, Firebase, MongoDB, OpenAI API, LangChain, Figma, Three.js & more! ⚡",
+  ai:"Yes! Adxdha builds custom AI agents using LangChain, OpenAI, and Anthropic APIs — chatbots, automation agents, RAG systems, and data analysis tools. 🤖",
+  hi:"Hello! 👋 I'm Adxdha's AI Assistant. Ask me about services, projects, pricing, or how to get started!"
+};
+let ri=0;
+function getR(m){
+  const l=m.toLowerCase();
+  if(/hello|hi|hey|hii/.test(l))return rsp.hi;
+  if(/price|cost|how much|budget|fee/.test(l))return rsp.price;
+  if(/contact|email|reach|message/.test(l))return rsp.contact;
+  if(/tech|stack|language|framework|tool/.test(l))return rsp.tech;
+  if(/ai|agent|chatbot|bot|llm|gpt/.test(l))return rsp.ai;
+  return rsp.def[ri++%rsp.def.length];
+}
+function addM(txt,isU){
+  const b=document.getElementById('chatBox');
+  const d=document.createElement('div');
+  d.className=`cmsg ${isU?'cu':'ca'}`;
+  d.innerHTML=`<div class="clbl">${isU?'You':'AI Agent'}</div><div class="cbub">${txt}</div>`;
+  b.appendChild(d);b.scrollTop=b.scrollHeight;
+}
+function addTyping(){
+  const b=document.getElementById('chatBox');
+  const d=document.createElement('div');
+  d.className='cmsg ca';d.id='typ';
+  d.innerHTML='<div class="clbl">AI Agent</div><div class="tind"><div class="td"></div><div class="td"></div><div class="td"></div></div>';
+  b.appendChild(d);b.scrollTop=b.scrollHeight;
+}
+function send(){
+  const inp=document.getElementById('aiIn');
+  const t=inp.value.trim();if(!t)return;
+  addM(t,true);inp.value='';
+  addTyping();
+  setTimeout(()=>{const ty=document.getElementById('typ');if(ty)ty.remove();addM(getR(t),false);},1100+Math.random()*700);
+}
+document.getElementById('aiSnd').addEventListener('click',send);
+document.getElementById('aiIn').addEventListener('keydown',e=>{if(e.key==='Enter')send();});
+
+// Contact form
+document.getElementById('cForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const btn=document.getElementById('sbtn');
+  const n=document.getElementById('fn').value;
+  const em=document.getElementById('fe').value;
+  const sv=document.getElementById('fs').value;
+  const bud=document.getElementById('fb').value;
+  const msg=document.getElementById('fm').value;
+  btn.textContent='⏳ Opening mail client...';btn.disabled=true;
+  const subj=encodeURIComponent(`Portfolio Inquiry from ${n}${sv?' — '+sv:''}`);
+  const body=encodeURIComponent(`Hi Adxdha,\n\nName: ${n}\nEmail: ${em}\nService: ${sv||'Not specified'}\nBudget: ${bud||'Not specified'}\n\nMessage:\n${msg}\n\n---\nSent from Adxdha Portfolio Website`);
+  setTimeout(()=>{
+    window.location.href=`mailto:adxdha@gmail.com?subject=${subj}&body=${body}`;
+    btn.textContent='✅ Email Client Opened!';
+    document.getElementById('smsg').classList.add('on');
+    this.reset();
+    setTimeout(()=>{btn.textContent='🌿 Send Message';btn.disabled=false;document.getElementById('smsg').classList.remove('on');},6000);
+  },900);
+});
+</script>
+</body>
+</html>
