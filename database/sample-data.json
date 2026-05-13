@@ -1,0 +1,22 @@
+{
+  "customers": [
+    {"name":"Aarav Textiles","phone":"+91 98765 43210","email":"billing@aaravtextiles.com","gstin":"27AARPA1234K1Z5","address":"Mumbai, Maharashtra","credit_balance":12500},
+    {"name":"Urban Stitch Wholesale","phone":"+1 212 555 0198","email":"orders@urbanstitch.example","gstin":"","address":"New York, USA","credit_balance":4200}
+  ],
+  "suppliers": [
+    {"name":"Prime Cotton Mills","phone":"+91 99887 77665","email":"sales@primecotton.example","gstin":"24PRIME1234L1Z2","address":"Surat, Gujarat","balance":35000}
+  ],
+  "products": [
+    {"sku":"TSH-BLK-M-001","barcode":"890100000001","name":"Premium Cotton T-Shirt","category":"T-Shirts","size":"M","color":"Black","fabric":"180 GSM Cotton","warehouse":"Main","batch_no":"B-24-001","cost_price":180,"sale_price":399,"stock":220,"low_stock":50},
+    {"sku":"DEN-BLU-32-002","barcode":"890100000002","name":"Slim Fit Denim Jeans","category":"Jeans","size":"32","color":"Indigo","fabric":"Stretch Denim","warehouse":"Main","batch_no":"D-24-008","cost_price":620,"sale_price":1299,"stock":36,"low_stock":40},
+    {"sku":"KUR-RED-L-003","barcode":"890100000003","name":"Designer Kurti","category":"Ethnic Wear","size":"L","color":"Red","fabric":"Rayon","warehouse":"Export","batch_no":"K-24-011","cost_price":340,"sale_price":899,"stock":92,"low_stock":25}
+  ],
+  "employees": [
+    {"name":"Meera Sharma","phone":"+91 90000 11111","role":"Cutting Master","shift":"Morning","salary":28000,"attendance_status":"Present","performance_score":94},
+    {"name":"Rafiq Khan","phone":"+91 90000 22222","role":"Stitching Operator","shift":"Evening","salary":24000,"attendance_status":"Present","performance_score":89}
+  ],
+  "production_jobs": [
+    {"order_no":"PROD-1001","stage":"Stitching","target_qty":500,"completed_qty":345,"status":"In Progress","due_date":"2026-05-20"},
+    {"order_no":"PROD-1002","stage":"Packing","target_qty":250,"completed_qty":220,"status":"Almost Done","due_date":"2026-05-16"}
+  ]
+}

@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, name TEXT, email TEXT UNIQUE, password_hash TEXT, role TEXT, created_at TEXT);
+CREATE TABLE IF NOT EXISTS customers (id TEXT PRIMARY KEY, name TEXT, phone TEXT, email TEXT, gstin TEXT, address TEXT, credit_balance REAL DEFAULT 0, created_at TEXT);
+CREATE TABLE IF NOT EXISTS suppliers (id TEXT PRIMARY KEY, name TEXT, phone TEXT, email TEXT, gstin TEXT, address TEXT, balance REAL DEFAULT 0, created_at TEXT);
+CREATE TABLE IF NOT EXISTS products (id TEXT PRIMARY KEY, sku TEXT UNIQUE, barcode TEXT, name TEXT, category TEXT, size TEXT, color TEXT, fabric TEXT, warehouse TEXT, batch_no TEXT, cost_price REAL, sale_price REAL, stock INTEGER, low_stock INTEGER, created_at TEXT);
+CREATE TABLE IF NOT EXISTS invoices (id TEXT PRIMARY KEY, invoice_no TEXT UNIQUE, customer_id TEXT, invoice_date TEXT, subtotal REAL, discount REAL, tax REAL, total REAL, paid REAL, due REAL, payment_method TEXT, status TEXT, type TEXT DEFAULT 'sale');
+CREATE TABLE IF NOT EXISTS invoice_items (id TEXT PRIMARY KEY, invoice_id TEXT, product_id TEXT, description TEXT, quantity INTEGER, price REAL, tax_rate REAL, line_total REAL);
+CREATE TABLE IF NOT EXISTS production_jobs (id TEXT PRIMARY KEY, order_no TEXT, product_id TEXT, stage TEXT, assigned_worker_id TEXT, target_qty INTEGER, completed_qty INTEGER, status TEXT, due_date TEXT, created_at TEXT);
+CREATE TABLE IF NOT EXISTS employees (id TEXT PRIMARY KEY, name TEXT, phone TEXT, role TEXT, shift TEXT, salary REAL, attendance_status TEXT, performance_score REAL, created_at TEXT);
+CREATE TABLE IF NOT EXISTS expenses (id TEXT PRIMARY KEY, title TEXT, category TEXT, amount REAL, expense_date TEXT, notes TEXT);
+CREATE TABLE IF NOT EXISTS activity_logs (id TEXT PRIMARY KEY, user_id TEXT, action TEXT, entity TEXT, entity_id TEXT, created_at TEXT);
