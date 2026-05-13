@@ -3,7 +3,7 @@ const path = require('path');
 const Database = require('better-sqlite3');
 
 const dataDir = path.join(__dirname, '..', 'database');
-const dbPath = path.join(dataDir, 'garmentpro.sqlite');
+const dbPath = path.join(dataDir, 'campuscompany.sqlite');
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 const db = new Database(dbPath);
 db.pragma('journal_mode = WAL');

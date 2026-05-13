@@ -7,18 +7,18 @@ const { db } = require('../../database/db');
 const exportDir = path.join(__dirname, '..', '..', 'exports');
 const backupDir = path.join(__dirname, '..', '..', 'backups');
 for (const dir of [exportDir, backupDir]) if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-const tables = ['customers','suppliers','products','invoices','invoice_items','employees','production_jobs','expenses','activity_logs'];
+const tables = ['students','courses','admissions','fee_payments','departments','projects','assets','customers','suppliers','products','invoices','invoice_items','employees','production_jobs','expenses','activity_logs'];
 function rows(table) { return db.prepare(`SELECT * FROM ${table}`).all(); }
 async function exportExcel(target = exportDir) {
   const workbook = new ExcelJS.Workbook();
-  workbook.creator = 'GarmentPro ERP';
+  workbook.creator = 'CampusCompany ERP';
   for (const table of tables) {
     const sheet = workbook.addWorksheet(table);
     const data = rows(table);
     if (data[0]) sheet.columns = Object.keys(data[0]).map(k => ({ header: k, key: k, width: 20 }));
     sheet.addRows(data);
   }
-  const file = path.join(target, `garmentpro-${Date.now()}.xlsx`);
+  const file = path.join(target, `campuscompany-${Date.now()}.xlsx`);
   await workbook.xlsx.writeFile(file);
   return file;
 }
@@ -30,7 +30,7 @@ function exportCsv(table) {
 function exportXml(table = 'all') {
   const payload = table === 'all' ? Object.fromEntries(tables.map(t => [t, rows(t)])) : { [table]: rows(table) };
   const file = path.join(exportDir, `${table}-${Date.now()}.xml`);
-  fs.writeFileSync(file, new Builder({ rootName: 'garmentProERP' }).buildObject(payload));
+  fs.writeFileSync(file, new Builder({ rootName: 'campusCompanyERP' }).buildObject(payload));
   return file;
 }
 async function importXml(xml) { return parseStringPromise(xml, { explicitArray: false }); }
