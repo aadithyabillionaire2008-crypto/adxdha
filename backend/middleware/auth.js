@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const SECRET = process.env.JWT_SECRET || 'garmentpro-local-secret-change-before-distribution';
+const SECRET = process.env.JWT_SECRET || 'campuscompany-local-secret-change-before-distribution';
 function sign(user) { return jwt.sign({ id: user.id, role: user.role, name: user.name }, SECRET, { expiresIn: '12h' }); }
 function requireAuth(req, res, next) {
   const token = (req.headers.authorization || '').replace('Bearer ', '');

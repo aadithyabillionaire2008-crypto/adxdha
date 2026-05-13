@@ -1,6 +1,7 @@
-const API = window.garmentPro?.apiBase || 'http://localhost:4521/api';
-let token = localStorage.getItem('gpe_token');
-export function setToken(next) { token = next; localStorage.setItem('gpe_token', next); }
+const bridge = window.campusCompany;
+const API = bridge?.apiBase || 'http://localhost:4521/api';
+let token = localStorage.getItem('cce_token');
+export function setToken(next) { token = next; localStorage.setItem('cce_token', next); }
 export async function request(path, options = {}) {
   const res = await fetch(`${API}${path}`, { ...options, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}), ...options.headers }, body: options.body && typeof options.body !== 'string' ? JSON.stringify(options.body) : options.body });
   const data = await res.json().catch(() => ({}));

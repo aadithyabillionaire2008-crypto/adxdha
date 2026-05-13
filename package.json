@@ -1,9 +1,9 @@
 {
-  "name": "garmentpro-erp",
+  "name": "campuscompany-erp",
   "version": "1.0.0",
-  "description": "GarmentPro ERP desktop billing and management software for garment businesses.",
+  "description": "CampusCompany ERP desktop management software for colleges and companies.",
   "main": "electron/main.js",
-  "author": "GarmentPro ERP",
+  "author": "CampusCompany ERP",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -45,8 +45,8 @@
     "wait-on": "latest"
   },
   "build": {
-    "appId": "com.garmentpro.erp",
-    "productName": "GarmentPro ERP",
+    "appId": "com.campuscompany.erp",
+    "productName": "CampusCompany ERP",
     "directories": {
       "output": "installer"
     },

@@ -1,4 +1,11 @@
 CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, name TEXT, email TEXT UNIQUE, password_hash TEXT, role TEXT, created_at TEXT);
+CREATE TABLE IF NOT EXISTS students (id TEXT PRIMARY KEY, admission_no TEXT UNIQUE, name TEXT, phone TEXT, email TEXT, program TEXT, semester TEXT, status TEXT, fee_due REAL DEFAULT 0, created_at TEXT);
+CREATE TABLE IF NOT EXISTS courses (id TEXT PRIMARY KEY, code TEXT UNIQUE, title TEXT, department TEXT, faculty TEXT, credits INTEGER, capacity INTEGER, enrolled INTEGER, created_at TEXT);
+CREATE TABLE IF NOT EXISTS admissions (id TEXT PRIMARY KEY, application_no TEXT UNIQUE, student_name TEXT, program TEXT, stage TEXT, counselor TEXT, score REAL, created_at TEXT);
+CREATE TABLE IF NOT EXISTS fee_payments (id TEXT PRIMARY KEY, receipt_no TEXT UNIQUE, student_id TEXT, payment_date TEXT, amount REAL, method TEXT, status TEXT, notes TEXT, created_at TEXT);
+CREATE TABLE IF NOT EXISTS departments (id TEXT PRIMARY KEY, name TEXT, head TEXT, type TEXT, budget REAL, location TEXT, created_at TEXT);
+CREATE TABLE IF NOT EXISTS projects (id TEXT PRIMARY KEY, code TEXT UNIQUE, name TEXT, client TEXT, department TEXT, manager TEXT, budget REAL, spent REAL, status TEXT, due_date TEXT, created_at TEXT);
+CREATE TABLE IF NOT EXISTS assets (id TEXT PRIMARY KEY, asset_tag TEXT UNIQUE, name TEXT, category TEXT, owner TEXT, location TEXT, purchase_value REAL, status TEXT, created_at TEXT);
 CREATE TABLE IF NOT EXISTS customers (id TEXT PRIMARY KEY, name TEXT, phone TEXT, email TEXT, gstin TEXT, address TEXT, credit_balance REAL DEFAULT 0, created_at TEXT);
 CREATE TABLE IF NOT EXISTS suppliers (id TEXT PRIMARY KEY, name TEXT, phone TEXT, email TEXT, gstin TEXT, address TEXT, balance REAL DEFAULT 0, created_at TEXT);
 CREATE TABLE IF NOT EXISTS products (id TEXT PRIMARY KEY, sku TEXT UNIQUE, barcode TEXT, name TEXT, category TEXT, size TEXT, color TEXT, fabric TEXT, warehouse TEXT, batch_no TEXT, cost_price REAL, sale_price REAL, stock INTEGER, low_stock INTEGER, created_at TEXT);

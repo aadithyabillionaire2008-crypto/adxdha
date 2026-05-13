@@ -1,22 +1,54 @@
 {
+  "students": [
+    {"admission_no":"ADM-2026-001","name":"Ananya Rao","phone":"+91 90000 11111","email":"ananya.rao@campus.example","program":"B.Tech Computer Science","semester":"4","status":"Active","fee_due":18000},
+    {"admission_no":"ADM-2026-002","name":"Kabir Mehta","phone":"+91 90000 22222","email":"kabir.mehta@campus.example","program":"MBA Finance","semester":"2","status":"Active","fee_due":0},
+    {"admission_no":"ADM-2026-003","name":"Sara Williams","phone":"+1 212 555 0110","email":"sara.williams@campus.example","program":"BBA Analytics","semester":"6","status":"Placement Ready","fee_due":9500}
+  ],
+  "courses": [
+    {"code":"CS401","title":"Enterprise Web Applications","department":"Computer Science","faculty":"Dr. Neha Iyer","credits":4,"capacity":80,"enrolled":72},
+    {"code":"MBA220","title":"Corporate Finance Lab","department":"Management","faculty":"Prof. Aditya Sen","credits":3,"capacity":60,"enrolled":54},
+    {"code":"HR310","title":"People Operations","department":"Human Resources","faculty":"Ms. Laura Chen","credits":3,"capacity":50,"enrolled":45}
+  ],
+  "admissions": [
+    {"application_no":"APP-1001","student_name":"Riya Sharma","program":"B.Tech AI & Data Science","stage":"Document Verification","counselor":"Meera Nair","score":88},
+    {"application_no":"APP-1002","student_name":"Omar Khan","program":"MBA Operations","stage":"Interview Scheduled","counselor":"Arjun Patel","score":81}
+  ],
+  "fee_payments": [
+    {"receipt_no":"RCPT-5001","student_id":"ADM-2026-001","payment_date":"2026-05-10","amount":32000,"method":"UPI","status":"Paid","notes":"Semester fee installment"},
+    {"receipt_no":"RCPT-5002","student_id":"ADM-2026-002","payment_date":"2026-05-11","amount":45000,"method":"Bank Transfer","status":"Paid","notes":"MBA term fee"}
+  ],
+  "departments": [
+    {"name":"Computer Science","head":"Dr. Neha Iyer","type":"College","budget":1200000,"location":"Block A"},
+    {"name":"Human Resources","head":"Laura Chen","type":"Company","budget":650000,"location":"Corporate Office"},
+    {"name":"Finance","head":"Vikram Shah","type":"Shared Services","budget":900000,"location":"Admin Wing"}
+  ],
+  "projects": [
+    {"code":"PRJ-ERP-01","name":"Smart Attendance Rollout","client":"City College","department":"Computer Science","manager":"Dr. Neha Iyer","budget":500000,"spent":320000,"status":"In Progress","due_date":"2026-06-15"},
+    {"code":"PRJ-HR-02","name":"Employee Onboarding Portal","client":"Internal","department":"Human Resources","manager":"Laura Chen","budget":300000,"spent":210000,"status":"Pilot","due_date":"2026-05-30"}
+  ],
+  "assets": [
+    {"asset_tag":"AST-LAB-001","name":"Dell Lab Workstation","category":"IT Equipment","owner":"Computer Science","location":"Lab 3","purchase_value":85000,"status":"In Use"},
+    {"asset_tag":"AST-OFF-014","name":"Conference Room Display","category":"Office Equipment","owner":"Operations","location":"HQ Boardroom","purchase_value":125000,"status":"In Use"}
+  ],
   "customers": [
-    {"name":"Aarav Textiles","phone":"+91 98765 43210","email":"billing@aaravtextiles.com","gstin":"27AARPA1234K1Z5","address":"Mumbai, Maharashtra","credit_balance":12500},
-    {"name":"Urban Stitch Wholesale","phone":"+1 212 555 0198","email":"orders@urbanstitch.example","gstin":"","address":"New York, USA","credit_balance":4200}
+    {"name":"City Skills College","phone":"+91 98765 43210","email":"billing@cityskills.example","gstin":"27CITY1234K1Z5","address":"Mumbai, Maharashtra","credit_balance":12500},
+    {"name":"Northstar Technologies","phone":"+1 212 555 0198","email":"accounts@northstar.example","gstin":"","address":"New York, USA","credit_balance":4200}
   ],
   "suppliers": [
-    {"name":"Prime Cotton Mills","phone":"+91 99887 77665","email":"sales@primecotton.example","gstin":"24PRIME1234L1Z2","address":"Surat, Gujarat","balance":35000}
+    {"name":"Prime Office Supplies","phone":"+91 99887 77665","email":"sales@primeoffice.example","gstin":"24PRIME1234L1Z2","address":"Surat, Gujarat","balance":35000}
   ],
   "products": [
-    {"sku":"TSH-BLK-M-001","barcode":"890100000001","name":"Premium Cotton T-Shirt","category":"T-Shirts","size":"M","color":"Black","fabric":"180 GSM Cotton","warehouse":"Main","batch_no":"B-24-001","cost_price":180,"sale_price":399,"stock":220,"low_stock":50},
-    {"sku":"DEN-BLU-32-002","barcode":"890100000002","name":"Slim Fit Denim Jeans","category":"Jeans","size":"32","color":"Indigo","fabric":"Stretch Denim","warehouse":"Main","batch_no":"D-24-008","cost_price":620,"sale_price":1299,"stock":36,"low_stock":40},
-    {"sku":"KUR-RED-L-003","barcode":"890100000003","name":"Designer Kurti","category":"Ethnic Wear","size":"L","color":"Red","fabric":"Rayon","warehouse":"Export","batch_no":"K-24-011","cost_price":340,"sale_price":899,"stock":92,"low_stock":25}
+    {"sku":"LAB-KIT-001","barcode":"890100000001","name":"Computer Lab Kit","category":"Academic Supplies","size":"Standard","color":"Blue","fabric":"N/A","warehouse":"Campus Store","batch_no":"B-26-001","cost_price":1800,"sale_price":2499,"stock":42,"low_stock":50},
+    {"sku":"ID-CARD-002","barcode":"890100000002","name":"Smart ID Card Pack","category":"Admin Supplies","size":"Pack","color":"White","fabric":"PVC","warehouse":"Admin Store","batch_no":"D-26-008","cost_price":120,"sale_price":199,"stock":360,"low_stock":80},
+    {"sku":"TRAIN-MAT-003","barcode":"890100000003","name":"Corporate Training Material","category":"Training","size":"Module","color":"Digital","fabric":"N/A","warehouse":"Cloud","batch_no":"K-26-011","cost_price":340,"sale_price":899,"stock":92,"low_stock":25}
   ],
   "employees": [
-    {"name":"Meera Sharma","phone":"+91 90000 11111","role":"Cutting Master","shift":"Morning","salary":28000,"attendance_status":"Present","performance_score":94},
-    {"name":"Rafiq Khan","phone":"+91 90000 22222","role":"Stitching Operator","shift":"Evening","salary":24000,"attendance_status":"Present","performance_score":89}
+    {"name":"Meera Nair","phone":"+91 90000 33333","role":"Admissions Counselor","shift":"Morning","salary":38000,"attendance_status":"Present","performance_score":94},
+    {"name":"Rafiq Khan","phone":"+91 90000 44444","role":"IT Support Lead","shift":"Evening","salary":42000,"attendance_status":"Present","performance_score":89},
+    {"name":"Laura Chen","phone":"+1 212 555 0133","role":"HR Manager","shift":"Day","salary":65000,"attendance_status":"Present","performance_score":92}
   ],
   "production_jobs": [
-    {"order_no":"PROD-1001","stage":"Stitching","target_qty":500,"completed_qty":345,"status":"In Progress","due_date":"2026-05-20"},
-    {"order_no":"PROD-1002","stage":"Packing","target_qty":250,"completed_qty":220,"status":"Almost Done","due_date":"2026-05-16"}
+    {"order_no":"OPS-1001","stage":"Admissions","target_qty":500,"completed_qty":345,"status":"In Progress","due_date":"2026-05-20"},
+    {"order_no":"OPS-1002","stage":"Training","target_qty":250,"completed_qty":220,"status":"Almost Done","due_date":"2026-05-16"}
   ]
 }

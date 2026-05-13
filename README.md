@@ -1,20 +1,19 @@
-# GarmentPro ERP
+# CampusCompany ERP
 
-GarmentPro ERP is a professional offline-first desktop billing and management application for garment factories, textile shops, clothing manufacturers, wholesalers, distributors, tailoring units, and garment export companies.
+CampusCompany ERP is an offline-first desktop ERP application for colleges, institutes, training centers, startups, service companies and corporate administration teams.
 
 ## Features
 
 - Electron + React + Node.js/Express desktop application.
 - SQLite local database for offline operation.
-- Excel workbook storage/export with separate sheets for customers, billing, inventory, employees, orders, and production data.
-- CSV and XML export/import services, one-click Excel backup, and scheduled automatic backups.
+- College modules for students, courses, admissions, fee receipts, dues and academic capacity tracking.
+- Company modules for departments, employees, projects, shared services, inventory and assets.
+- Excel workbook storage/export with separate sheets for students, fees, courses, employees, projects, assets, invoices and activity logs.
+- CSV and XML export/import services, one-click Excel backup and scheduled automatic backups.
 - Secure login with bcrypt password hashing and JWT sessions.
-- Premium dashboard with sales, orders, pending payments, profit, stock alerts, production status, top products, and worker performance.
-- Fast GST billing with invoice numbers, QR code support, payment tracking, return-ready invoice types, PDF output hook, and thermal-printer-friendly preview.
-- Inventory management for SKU, barcode, size, color, fabric, stock in/out, warehouse, batch and low-stock alerts.
-- Production tracking for cutting, stitching, finishing, packing, worker assignment, and daily reporting.
-- Customer, supplier, employee, admin, reports, backup, settings, activity logging, and user guide screens.
-- Dark/light mode, responsive layout, smooth transitions, keyboard shortcuts, search, and beginner-friendly workflows.
+- Premium dashboard with fee collection, pending dues, active students, project budgets, course capacity, admissions pipeline, asset summary and inventory alerts.
+- Fast fee/service billing with invoice numbers, QR code support, payment tracking, PDF output hook and receipt preview.
+- Dark/light mode, responsive layout, smooth transitions, keyboard shortcuts, search and beginner-friendly workflows.
 
 ## Project structure
 
@@ -52,7 +51,7 @@ electron/   Desktop shell, preload bridge and shortcuts
 
 5. Login with:
 
-   - Email: `admin@garmentpro.local`
+   - Email: `admin@campuscompany.local`
    - Password: `admin123`
 
 ## Production build and installers
@@ -74,6 +73,6 @@ Electron Builder is configured for Windows NSIS, macOS DMG, and Linux AppImage/D
 
 ## Keyboard shortcuts
 
-- `Ctrl/Cmd + B`: open Billing
+- `Ctrl/Cmd + B`: open Fees & Billing
 - `Ctrl/Cmd + F`: focus global search
 - `Ctrl/Cmd + I`: invoice workflow hook

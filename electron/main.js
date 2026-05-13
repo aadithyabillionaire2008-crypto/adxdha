@@ -16,7 +16,7 @@ function createWindow() {
     height: 920,
     minWidth: 1100,
     minHeight: 720,
-    title: 'GarmentPro ERP',
+    title: 'CampusCompany ERP',
     backgroundColor: '#0f172a',
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false }
   });
