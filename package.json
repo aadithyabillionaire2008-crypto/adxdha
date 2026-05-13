@@ -1,0 +1,83 @@
+{
+  "name": "garmentpro-erp",
+  "version": "1.0.0",
+  "description": "GarmentPro ERP desktop billing and management software for garment businesses.",
+  "main": "electron/main.js",
+  "author": "GarmentPro ERP",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm:dev:backend\" \"npm:dev:frontend\" \"wait-on http://localhost:5173 http://localhost:4521/health && electron .\"",
+    "dev:frontend": "vite --host 0.0.0.0",
+    "dev:backend": "node backend/server.js",
+    "build": "vite build",
+    "start": "cross-env NODE_ENV=production electron .",
+    "dist": "npm run build && electron-builder",
+    "seed": "node database/seed.js",
+    "backup": "node backend/scripts/backup.js"
+  },
+  "dependencies": {
+    "bcryptjs": "latest",
+    "better-sqlite3": "latest",
+    "cors": "latest",
+    "csv-stringify": "latest",
+    "electron-log": "latest",
+    "exceljs": "latest",
+    "express": "latest",
+    "framer-motion": "latest",
+    "helmet": "latest",
+    "jsonwebtoken": "latest",
+    "lucide-react": "latest",
+    "morgan": "latest",
+    "nanoid": "latest",
+    "qrcode": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "recharts": "latest",
+    "xml2js": "latest"
+  },
+  "devDependencies": {
+    "concurrently": "latest",
+    "cross-env": "latest",
+    "electron": "latest",
+    "electron-builder": "latest",
+    "vite": "latest",
+    "wait-on": "latest"
+  },
+  "build": {
+    "appId": "com.garmentpro.erp",
+    "productName": "GarmentPro ERP",
+    "directories": {
+      "output": "installer"
+    },
+    "files": [
+      "dist/**/*",
+      "backend/**/*",
+      "database/**/*",
+      "electron/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      "exports",
+      "backups",
+      "modules"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  }
+}

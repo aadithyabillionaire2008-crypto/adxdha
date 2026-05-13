@@ -1,0 +1,11 @@
+const express = require('express');
+const { requireAuth } = require('../middleware/auth');
+const excel = require('../services/excelService');
+const router = express.Router();
+router.use(requireAuth);
+router.post('/excel/backup', async (_, res) => res.json({ file: await excel.backupExcel() }));
+router.get('/excel', async (_, res) => res.json({ file: await excel.exportExcel() }));
+router.get('/csv/:table', (req, res) => res.json({ file: excel.exportCsv(req.params.table) }));
+router.get('/xml/:table?', (req, res) => res.json({ file: excel.exportXml(req.params.table || 'all') }));
+router.post('/xml/import', async (req, res) => res.json({ parsed: await excel.importXml(req.body.xml || '') }));
+module.exports = router;
